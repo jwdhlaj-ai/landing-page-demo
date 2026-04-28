@@ -1,53 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Startup Landing Page Template</title>
+    <title>Advanced 2D Animation Showcase | Startup Template</title>
     
-    <!-- Google Fonts: Inter for a clean, professional look -->
+    <!-- Google Fonts: Inter for Typography Systems -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        /* --- CSS Variables & Reset --- */
+        /* --- CSS Variables & Design Tokens --- */
         :root {
-            /* Brand Colors: Professional Blue Theme (Universal) */
-            --primary: #2563EB;       /* Blue 600 */
-            --primary-dark: #1D4ED8;  /* Blue 700 */
-            --primary-light: #EFF6FF; /* Blue 50 */
-            --secondary: #0F172A;     /* Slate 900 */
-            --text-body: #475569;     /* Slate 600 */
-            --bg-body: #FFFFFF;       /* White */
-            --bg-gray: #F8FAFC;       /* Slate 50 */
+            /* Color Language & Temperature: Cool Base with Warm Accents */
+            --primary: #3B82F6;       /* Blue 500 - Cool */
+            --primary-dark: #1E40AF;  /* Blue 800 - Deep Cool */
+            --accent: #F59E0B;        /* Amber 500 - Warm (For Simultaneous Contrast) */
+            --secondary: #0F172A;     /* Slate 900 - Neutral */
+            --text-main: #334155;     /* Slate 700 */
+            --text-light: #64748B;    /* Slate 500 */
             
-            /* Spacing & Layout */
-            --container-width: 1100px;
-            --section-padding: 80px 24px;
-            --radius: 12px;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            /* Backgrounds for Glassmorphism & Claymorphism */
+            --bg-body: #F1F5F9;       /* Slate 100 */
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --clay-bg: #FFFFFF;
+            
+            /* Spacing & Layout (Spatial Composition) */
+            --container-width: 1200px;
+            --section-padding: 100px 24px;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            
+            /* Shadows for Depth & Layering */
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-float: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            
+            /* Easing Styles: Custom Bezier for Anticipation & Bounce */
+            --ease-anticipate: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
+        /* --- Reset & Base --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-body);
-            color: var(--text-body);
+            color: var(--text-main);
             line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
+        a { text-decoration: none; color: inherit; transition: 0.3s ease; }
         ul { list-style: none; }
 
         /* --- Utility Classes --- */
@@ -55,57 +64,95 @@
             max-width: var(--container-width);
             margin: 0 auto;
             padding: 0 24px;
+            position: relative;
+            z-index: 2;
         }
 
-        .text-center { text-align: center; }
         .flex-center { display: flex; align-items: center; justify-content: center; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; }
 
-        /* --- Buttons --- */
+        /* --- Glassmorphism Component --- */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* --- Claymorphism Component --- */
+        .clay-card {
+            background: var(--clay-bg);
+            border-radius: var(--radius-lg);
+            /* Inner shadows for inflated 3D look */
+            box-shadow: 
+                inset 4px 4px 8px rgba(0,0,0,0.03),
+                inset -4px -4px 8px rgba(255,255,255, 0.8),
+                10px 10px 20px rgba(163, 177, 198, 0.2), 
+                -10px -10px 20px rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255,255,255,0.6);
+            transition: transform 0.4s var(--ease-anticipate);
+        }
+
+        /* --- Buttons & Feedback Style --- */
         .btn {
-            display: inline-block;
-            padding: 12px 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 32px;
             font-weight: 600;
-            border-radius: 8px;
-            transition: all 0.2s ease;
+            border-radius: 12px;
             cursor: pointer;
-            font-size: 0.95rem;
+            font-size: 1rem;
+            transition: all 0.2s var(--ease-smooth);
+            position: relative;
+            overflow: hidden;
         }
 
         .btn-primary {
-            background-color: var(--primary);
+            background: var(--primary);
             color: white;
-            border: 1px solid var(--primary);
+            box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.39);
         }
 
+        /* The Pop-out Effect on Hover */
         .btn-primary:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.23);
         }
 
-        .btn-secondary {
-            background-color: white;
+        /* Feedback Style: Pressing down */
+        .btn-primary:active {
+            transform: translateY(0) scale(0.96);
+        }
+
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.5);
             color: var(--secondary);
-            border: 1px solid #E2E8F0;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(4px);
+        }
+        
+        .btn-glass:hover {
+            background: white;
+            transform: translateY(-2px);
         }
 
-        .btn-secondary:hover {
-            border-color: var(--secondary);
-            background-color: var(--bg-gray);
-        }
-
-        /* --- Header --- */
+        /* --- Header (Glassmorphism) --- */
         header {
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
+            position: fixed;
+            top: 20px;
+            left: 0;
+            right: 0;
             z-index: 100;
-            border-bottom: 1px solid #E2E8F0;
-            padding: 16px 0;
+            padding: 0 24px;
         }
 
-        nav {
+        .nav-inner {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 16px 32px;
+            border-radius: 50px; /* Pill shape */
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -117,56 +164,47 @@
             color: var(--secondary);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .logo-icon {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             background: var(--primary);
             color: white;
-            border-radius: 6px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            /* Anticipation Animation on Logo */
+            animation: pulseLogo 3s infinite ease-in-out;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 32px;
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a { font-weight: 500; color: var(--text-main); font-size: 0.95rem; position: relative; }
+        
+        .nav-links a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0;
+            background: var(--primary); transition: width 0.3s var(--ease-anticipate);
         }
-
-        .nav-links a {
-            font-weight: 500;
-            color: var(--text-body);
-            font-size: 0.95rem;
-        }
-
-        .nav-links a:hover { color: var(--primary); }
+        .nav-links a:hover::after { width: 100%; }
 
         /* --- Hero Section --- */
         .hero {
-            padding: 100px 0;
-            background: linear-gradient(to bottom, #FFFFFF 0%, #F8FAFC 100%);
+            padding-top: 180px;
+            padding-bottom: 100px;
+            position: relative;
+            overflow: hidden;
+            /* Minimalism Background */
+            background: radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.05) 0%, transparent 40%);
         }
 
-        .hero-grid {
+        .hero-content {
             display: grid;
             grid-template-columns: 1.2fr 1fr;
             gap: 60px;
             align-items: center;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            background: var(--primary-light);
-            color: var(--primary);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 20px;
         }
 
         .hero-text h1 {
@@ -174,300 +212,449 @@
             line-height: 1.1;
             color: var(--secondary);
             margin-bottom: 24px;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.03em;
         }
 
         .hero-text p {
-            font-size: 1.125rem;
+            font-size: 1.25rem;
+            color: var(--text-light);
             margin-bottom: 32px;
-            color: var(--text-body);
-            max-width: 500px;
+            max-width: 540px;
         }
 
-        .hero-buttons {
-            display: flex;
-            gap: 16px;
+        /* Simultaneous Contrast Badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 16px;
+            background: #FFFBEB; /* Very light orange */
+            color: #D97706; /* Dark orange text */
+            border: 1px solid #FCD34D;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 24px;
+            /* Color Temperature: Warm against Cool page */
         }
 
-        .hero-image {
+        /* Hero Visual: Liquid Glass & Claymorphism Mix */
+        .hero-visual {
             position: relative;
-        }
-
-        .hero-image img {
-            width: 100%;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            border: 1px solid #E2E8F0;
-        }
-
-        /* --- Features Section --- */
-        .features {
-            padding: var(--section-padding);
-            background-color: var(--bg-body);
-        }
-
-        .section-header {
-            margin-bottom: 60px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .section-header h2 {
-            font-size: 2.25rem;
-            color: var(--secondary);
-            margin-bottom: 12px;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 32px;
-        }
-
-        .feature-card {
-            background: var(--bg-gray);
-            padding: 32px;
-            border-radius: var(--radius);
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
-        }
-
-        .feature-card:hover {
-            background: white;
-            box-shadow: var(--shadow-lg);
-            transform: translateY(-5px);
-            border-color: #E2E8F0;
-        }
-
-        .icon-wrap {
-            width: 48px;
-            height: 48px;
-            background: white;
-            border: 1px solid #E2E8F0;
-            border-radius: 10px;
+            height: 500px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
-            color: var(--primary);
         }
 
-        .feature-card h3 {
-            font-size: 1.25rem;
+        /* Floating Abstract Shape (Liquid Glass) */
+        .blob-bg {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            background: linear-gradient(135deg, #DBEAFE 0%, #EFF6FF 100%);
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            z-index: -1;
+            animation: morphBlob 10s ease-in-out infinite;
+            filter: blur(40px);
+            opacity: 0.8;
+        }
+
+        /* Main Dashboard Card (Glassmorphism + Pop-out) */
+        .dash-card {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.15);
+            transform: rotate(-3deg);
+            transition: transform 0.6s var(--ease-anticipate);
+            position: relative;
+            z-index: 2;
+        }
+
+        .dash-card:hover {
+            transform: rotate(0deg) scale(1.02) translateY(-10px);
+            z-index: 3;
+        }
+
+        .dash-card img {
+            width: 100%;
+            border-radius: 12px;
+            display: block;
+            pointer-events: none; /* Prevent image drag */
+        }
+
+        /* --- 2D Animation Showcase Section --- */
+        .showcase-section {
+            padding: var(--section-padding);
+            background: white;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
             color: var(--secondary);
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+        }
+
+        /* Skew Morphism Container */
+        .skew-container {
+            transform: skewY(-3deg);
+            padding: 40px 0;
+            margin-top: 40px;
+            background: #F8FAFC;
+            border-top: 1px solid #E2E8F0;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .skew-content {
+            transform: skewY(3deg); /* Counter skew to keep content straight */
+        }
+
+        /* Animation Cards */
+        .anim-card {
+            padding: 40px;
+            border-radius: var(--radius-md);
+            background: white;
+            border: 1px solid #E2E8F0;
+            transition: all 0.4s var(--ease-anticipate);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        /* Hover Interaction: Depth & Layering + The Pop-out Effect */
+        .anim-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+
+        .anim-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--primary);
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.4s var(--ease-anticipate);
+        }
+
+        .anim-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            background: #EFF6FF;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: var(--primary);
+            font-size: 24px;
+            transition: transform 0.4s var(--ease-anticipate);
+        }
+
+        /* Anticipation Style on Icons */
+        .anim-card:hover .icon-box {
+            transform: scale(1.1) rotate(5deg);
+            background: var(--primary);
+            color: white;
+        }
+
+        /* --- Stats Section (Claymorphism) --- */
+        .stats-section {
+            padding: 80px 0;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--secondary);
+            display: block;
+            margin-bottom: 8px;
         }
 
         /* --- CTA Section --- */
         .cta-section {
-            padding: 100px 0;
-            background-color: var(--secondary);
+            padding: 100px 24px;
+            text-align: center;
+            position: relative;
+            background: var(--secondary);
+            overflow: hidden;
+        }
+
+        /* Decorative Circles for Depth */
+        .circle-decor {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            opacity: 0.2;
+            filter: blur(60px);
+        }
+
+        .c1 { width: 300px; height: 300px; top: -100px; left: -100px; }
+        .c2 { width: 400px; height: 400px; bottom: -150px; right: -100px; }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-content h2 {
             color: white;
-            text-align: center;
-        }
-
-        .cta-section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 16px;
-        }
-
-        .cta-section p {
-            color: #94A3B8;
-            margin-bottom: 32px;
-            font-size: 1.125rem;
-        }
-
-        /* --- Footer --- */
-        footer {
-            padding: 60px 0 30px;
-            background-color: var(--bg-gray);
-            border-top: 1px solid #E2E8F0;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-brand p {
-            margin-top: 16px;
-            font-size: 0.9rem;
-            color: var(--text-body);
-            max-width: 300px;
-        }
-
-        .footer-col h4 {
-            font-size: 0.95rem;
-            color: var(--secondary);
+            font-size: 3rem;
             margin-bottom: 20px;
-            font-weight: 700;
         }
 
-        .footer-col ul li {
-            margin-bottom: 12px;
+        /* --- Animations Keyframes --- */
+        @keyframes morphBlob {
+            0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+            33% { border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; }
+            66% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+            100% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
         }
 
-        .footer-col ul li a {
-            font-size: 0.9rem;
-            color: var(--text-body);
+        @keyframes pulseLogo {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
-        .footer-col ul li a:hover { color: var(--primary); }
-
-        .copyright {
-            text-align: center;
-            font-size: 0.85rem;
-            color: #94A3B8;
-            padding-top: 30px;
-            border-top: 1px solid #E2E8F0;
+        /* Entrance Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s var(--ease-anticipate);
         }
 
-        /* --- Responsive --- */
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Responsive Design (Fully Responsive) --- */
         @media (max-width: 900px) {
-            .hero-grid { grid-template-columns: 1fr; text-align: center; }
-            .hero-text p { margin: 0 auto 32px auto; }
-            .hero-buttons { justify-content: center; }
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .hero-text p { margin: 0 auto 32px; }
             .hero-text h1 { font-size: 2.5rem; }
-            .nav-links { display: none; } /* Hide nav on mobile for simplicity */
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-        }
-        @media (max-width: 500px) {
-            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .nav-links { display: none; }
+            .dash-card { transform: rotate(0); margin: 0 auto; }
+            .skew-container { transform: none; }
+            .skew-content { transform: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- Header with Glassmorphism -->
     <header>
-        <div class="container">
-            <nav>
-                <a href="#" class="logo">
-                    <div class="logo-icon">S</div>
-                    <span>Startup</span>
-                </a>
-                <div class="nav-links">
-                    <a href="#features">Features</a>
-                    <a href="#solutions">Solutions</a>
-                    <a href="#pricing">Pricing</a>
-                    <a href="#about">About</a>
+        <nav class="glass-panel nav-inner">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
                 </div>
-                <a href="#cta" class="btn btn-primary">Get Started</a>
-            </nav>
-        </div>
+                <span>Startup.io</span>
+            </a>
+            <div class="nav-links">
+                <a href="#features">المميزات</a>
+                <a href="#showcase">التصميم</a>
+                <a href="#pricing">الأسعار</a>
+                <a href="#about">عنا</a>
+            </div>
+            <a href="#cta" class="btn btn-primary" style="padding: 10px 24px; font-size: 0.9rem;">ابدأ الآن</a>
+        </nav>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero Section: Spatial Composition & Anticipation Style -->
     <section class="hero">
         <div class="container">
-            <div class="hero-grid">
-                <div class="hero-text">
-                    <div class="hero-badge">New: v2.0 Released</div>
-                    <h1>Build your dream product with ease.</h1>
-                    <p>A powerful, flexible platform designed to help startups launch faster and scale smarter without the technical headache.</p>
-                    <div class="hero-buttons">
-                        <a href="#cta" class="btn btn-primary">Start Free Trial</a>
-                        <a href="#features" class="btn btn-secondary">Learn More</a>
+            <div class="hero-content">
+                <div class="hero-text reveal">
+                    <div class="badge">✨ النسخة الجديدة 2.0 متاحة الآن</div>
+                    <h1>اصنع منتج أحلامك <br> بلمسة من الإبداع.</h1>
+                    <p>منصة قوية ومرنة تستخدم أحدث تقنيات <strong>Clay Morphism</strong> و <strong>Glassmorphism</strong> لمنح مشروعك الطابع البصري المميز.</p>
+                    <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: inherit;">
+                        <a href="#cta" class="btn btn-primary">جربة مجاناً</a>
+                        <a href="#showcase" class="btn btn-glass">اكتشف المزيد</a>
                     </div>
                 </div>
-                <div class="hero-image">
-                    <img src="https://picsum.photos/seed/startupgeneric/600/400" alt="Dashboard Preview">
+
+                <div class="hero-visual reveal">
+                    <div class="blob-bg"></div>
+                    <!-- The Pop-out Effect Element -->
+                    <div class="dash-card">
+                        <img src="https://picsum.photos/seed/uiux/600/400" alt="Dashboard UI">
+                        <!-- Floating Badge (Social Proof) -->
+                        <div style="position: absolute; bottom: 30px; left: -20px; background: white; padding: 12px 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 10px; animation: floatPop 4s infinite ease-in-out;">
+                            <div style="background: #DCFCE7; color: #166534; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">✓</div>
+                            <div>
+                                <div style="font-size: 0.8rem; color: #64748B;">التحليل</div>
+                                <div style="font-weight: 700; color: #0F172A;">+128% نمو</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
+    <!-- Stats: Claymorphism & Typography Systems -->
+    <section class="stats-section">
         <div class="container">
-            <div class="section-header text-center">
-                <h2>Everything you need to grow</h2>
-                <p>We provide the tools and infrastructure to take your business to the next level.</p>
+            <div class="grid-3">
+                <div class="clay-card stat-card reveal">
+                    <span class="stat-number">10k+</span>
+                    <span style="color: var(--text-light);">مستخدم نشط</span>
+                </div>
+                <div class="clay-card stat-card reveal" style="transition-delay: 0.1s;">
+                    <span class="stat-number">98%</span>
+                    <span style="color: var(--text-light);">رضا العملاء</span>
+                </div>
+                <div class="clay-card stat-card reveal" style="transition-delay: 0.2s;">
+                    <span class="stat-number">24/7</span>
+                    <span style="color: var(--text-light);">دعم فني</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2D Animation Showcase: Skew Morphism & Interaction -->
+    <section id="showcase" class="showcase-section">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>تجربة مستخدم تفاعلية</h2>
+                <p>نستخدم <strong>Anticipation Style</strong> و <strong>Easing Styles</strong> لإنشاء حركات طبيعية تجذب المستخدم وتعزز <strong>Feedback Style</strong>.</p>
             </div>
 
-            <div class="features-grid">
+            <div class="grid-3">
                 <!-- Feature 1 -->
-                <div class="feature-card">
-                    <div class="icon-wrap">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
-                    </div>
-                    <h3>Lightning Fast</h3>
-                    <p>Optimized for speed and performance so you never have to worry about loading times.</p>
+                <div class="anim-card reveal">
+                    <div class="icon-box">⚡</div>
+                    <h3 style="margin-bottom: 10px; color: var(--secondary);">سرعة فائقة</h3>
+                    <p style="color: var(--text-light);">تحميل فوري بفضل تحسين الأداء وتقليل الطلب على الموارد.</p>
                 </div>
 
                 <!-- Feature 2 -->
-                <div class="feature-card">
-                    <div class="icon-wrap">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                    </div>
-                    <h3>Secure by Design</h3>
-                    <p>Enterprise-grade security features built-in from day one to protect your data.</p>
+                <div class="anim-card reveal" style="transition-delay: 0.1s;">
+                    <div class="icon-box">🔒</div>
+                    <h3 style="margin-bottom: 10px; color: var(--secondary);">أمان متكامل</h3>
+                    <p style="color: var(--text-light);">حماية للبيانات مع طبقات أمان متعددة تعتمد على مبدأ <strong>Depth & Layering</strong>.</p>
                 </div>
 
                 <!-- Feature 3 -->
-                <div class="feature-card">
-                    <div class="icon-wrap">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                    </div>
-                    <h3>Team Collaboration</h3>
-                    <p>Built for teams of all sizes. Work together in real-time with seamless sync.</p>
+                <div class="anim-card reveal" style="transition-delay: 0.2s;">
+                    <div class="icon-box">🎨</div>
+                    <h3 style="margin-bottom: 10px; color: var(--secondary);">تصميم مرن</h3>
+                    <p style="color: var(--text-light);">نظام ألوان ذكي يستغل <strong>Simultaneous Contrast</strong> لتمييز العناصر الهامة.</p>
+                </div>
+            </div>
+
+            <!-- Skew Morphism Decorative Strip -->
+            <div class="skew-container">
+                <div class="container skew-content text-center">
+                    <p style="font-size: 1.5rem; font-weight: 600; color: var(--secondary);">
+                        "التصميم ليس فقط كيف يبدو الأمر، بل كيف يعمل."
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
+    <!-- CTA Section: Color Temperature & Contrast -->
     <section id="cta" class="cta-section">
-        <div class="container">
-            <h2>Ready to get started?</h2>
-            <p>Join thousands of satisfied customers today.</p>
-            <a href="#" class="btn btn-primary" style="background-color: white; color: var(--primary);">Create Account</a>
+        <div class="circle-decor c1"></div>
+        <div class="circle-decor c2"></div>
+        <div class="container cta-content reveal">
+            <h2>جاهز لبدء رحلتك؟</h2>
+            <p style="color: #CBD5E1; margin-bottom: 30px; font-size: 1.2rem;">انضم لآلاف الشركات الناجحة اليوم واستخدم أقوى أدوات الـ UI/UX.</p>
+            <a href="#" class="btn btn-primary" style="background: white; color: var(--primary);">إنشاء حساب مجاني</a>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
+    <footer style="background: white; padding: 60px 0; border-top: 1px solid #E2E8F0;">
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <div class="logo">
-                        <div class="logo-icon">S</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px;">
+                <div>
+                    <div class="logo" style="margin-bottom: 15px;">
+                        <div class="logo-icon" style="background: var(--secondary);">S</div>
                         <span>Startup</span>
                     </div>
-                    <p>Making technology accessible for everyone. Built with passion for innovation.</p>
+                    <p style="color: var(--text-light); font-size: 0.9rem;">نصنع المستقبل الرقمي بتصاميم تتحدث لغة المستخدم.</p>
                 </div>
-                <div class="footer-col">
-                    <h4>Product</h4>
-                    <ul>
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Integrations</a></li>
-                        <li><a href="#">Pricing</a></li>
+                <div>
+                    <h4 style="color: var(--secondary); margin-bottom: 15px;">المنتج</h4>
+                    <ul style="color: var(--text-light); font-size: 0.9rem; line-height: 2;">
+                        <li><a href="#">المميزات</a></li>
+                        <li><a href="#">التكامل</a></li>
+                        <li><a href="#">الأسعار</a></li>
                     </ul>
                 </div>
-                <div class="footer-col">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Blog</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
+                <div>
+                    <h4 style="color: var(--secondary); margin-bottom: 15px;">الشركة</h4>
+                    <ul style="color: var(--text-light); font-size: 0.9rem; line-height: 2;">
+                        <li><a href="#">من نحن</a></li>
+                        <li><a href="#">الوظائف</a></li>
+                        <li><a href="#">المدونة</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="copyright">
-                &copy; 2023 Startup Inc. All rights reserved.
+            <div class="text-center" style="color: #94A3B8; font-size: 0.85rem; padding-top: 20px; border-top: 1px solid #F1F5F9;">
+                &copy; 2023 Startup Inc. جميع الحقوق محفوظة.
             </div>
         </div>
     </footer>
 
+    <!-- JavaScript for Scroll Animations (Intersection Observer) -->
+    <script>
+        // استخدام IntersectionObserver لإضافة تأثيرات الحركة عند التمرير
+        // هذا يعزز "Anticipation Style" و "Feedback Style" أثناء تصفح الصفحة
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1 // يبدأ التفاعل عند ظهور 10% من العنصر
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        // إيقاف المراقبة بعد التفعيل لتحسين الأداء
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const revealElements = document.querySelectorAll('.reveal');
+            revealElements.forEach(el => observer.observe(el));
+        });
+
+        // إضافة تأثير بسيط للأزرار (Micro-interaction Feedback)
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                // تغيير بسيط في المؤشر أو الظل لتعزيز التغذية الراجعة
+                btn.style.cursor = 'pointer';
+            });
+        });
+    </script>
 </body>
 </html>
