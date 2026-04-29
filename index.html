@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,7 +69,8 @@
         }
 
         .flex-center { display: flex; align-items: center; justify-content: center; }
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+        .text-center { text-align: center; }
 
         /* --- Glassmorphism Component --- */
         .glass-panel {
@@ -107,6 +108,8 @@
             transition: all 0.2s var(--ease-smooth);
             position: relative;
             overflow: hidden;
+            font-family: inherit;
+            border: none;
         }
 
         .btn-primary {
@@ -184,7 +187,7 @@
         .nav-links a { font-weight: 500; color: var(--text-main); font-size: 0.95rem; position: relative; }
         
         .nav-links a::after {
-            content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0;
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; right: 0; /* Changed left to right for RTL */
             background: var(--primary); transition: width 0.3s var(--ease-anticipate);
         }
         .nav-links a:hover::after { width: 100%; }
@@ -207,6 +210,10 @@
             align-items: center;
         }
 
+        .hero-text {
+            text-align: right; /* Default desktop alignment for Arabic */
+        }
+
         .hero-text h1 {
             font-size: 3.5rem;
             line-height: 1.1;
@@ -220,6 +227,14 @@
             color: var(--text-light);
             margin-bottom: 32px;
             max-width: 540px;
+            margin-right: auto; /* Align to right in RTL */
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: flex-start; /* Aligns buttons to the right in RTL */
         }
 
         /* Simultaneous Contrast Badge */
@@ -269,7 +284,7 @@
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.8);
             box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.15);
-            transform: rotate(-3deg);
+            transform: rotate(3deg); /* Flipped for RTL */
             transition: transform 0.6s var(--ease-anticipate);
             position: relative;
             z-index: 2;
@@ -285,6 +300,21 @@
             border-radius: 12px;
             display: block;
             pointer-events: none; /* Prevent image drag */
+        }
+
+        /* Floating Badge (Social Proof) */
+        .float-badge {
+            position: absolute;
+            bottom: 30px;
+            left: -20px; /* Sticks out to the left in RTL */
+            background: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: floatPop 4s infinite ease-in-out;
         }
 
         /* --- 2D Animation Showcase Section --- */
@@ -330,6 +360,7 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
+            text-align: center; /* Centered text as requested */
         }
 
         /* Hover Interaction: Depth & Layering + The Pop-out Effect */
@@ -342,7 +373,7 @@
         .anim-card::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; width: 4px; height: 100%;
+            top: 0; right: 0; width: 4px; height: 100%; /* Changed left to right for RTL */
             background: var(--primary);
             transform: scaleY(0);
             transform-origin: bottom;
@@ -361,7 +392,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 24px;
+            margin: 0 auto 24px; /* Centered icon as requested */
             color: var(--primary);
             font-size: 24px;
             transition: transform 0.4s var(--ease-anticipate);
@@ -410,8 +441,8 @@
             filter: blur(60px);
         }
 
-        .c1 { width: 300px; height: 300px; top: -100px; left: -100px; }
-        .c2 { width: 400px; height: 400px; bottom: -150px; right: -100px; }
+        .c1 { width: 300px; height: 300px; top: -100px; right: -100px; } /* Swapped left/right for visual balance in RTL */
+        .c2 { width: 400px; height: 400px; bottom: -150px; left: -100px; }
 
         .cta-content {
             position: relative;
@@ -422,6 +453,18 @@
             color: white;
             font-size: 3rem;
             margin-bottom: 20px;
+        }
+
+        /* --- Footer --- */
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-about {
+            text-align: right; /* Align right on desktop */
         }
 
         /* --- Animations Keyframes --- */
@@ -435,6 +478,11 @@
         @keyframes pulseLogo {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
+        }
+
+        @keyframes floatPop {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         /* Entrance Animation Classes */
@@ -451,13 +499,28 @@
 
         /* --- Responsive Design (Fully Responsive) --- */
         @media (max-width: 900px) {
-            .hero-content { grid-template-columns: 1fr; text-align: center; }
-            .hero-text p { margin: 0 auto 32px; }
+            .hero-content { 
+                grid-template-columns: 1fr; 
+                text-align: center; /* Center everything on mobile */
+            }
+            .hero-text { text-align: center; }
+            .hero-text p { margin-right: auto; margin-left: auto; }
             .hero-text h1 { font-size: 2.5rem; }
+            .hero-buttons { justify-content: center; }
             .nav-links { display: none; }
             .dash-card { transform: rotate(0); margin: 0 auto; }
             .skew-container { transform: none; }
             .skew-content { transform: none; }
+            .float-badge { left: 10px; bottom: 10px; } /* Prevent overflow on mobile */
+            .footer-about { text-align: center; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 { font-size: 2rem; }
+            .section-header h2 { font-size: 2rem; }
+            .cta-content h2 { font-size: 2rem; }
+            .hero-visual { height: 350px; }
+            .blob-bg { width: 300px; height: 300px; }
         }
     </style>
 </head>
@@ -490,7 +553,7 @@
                     <div class="badge">✨ النسخة الجديدة 2.0 متاحة الآن</div>
                     <h1>اصنع منتج أحلامك <br> بلمسة من الإبداع.</h1>
                     <p>منصة قوية ومرنة تستخدم أحدث تقنيات <strong>Clay Morphism</strong> و <strong>Glassmorphism</strong> لمنح مشروعك الطابع البصري المميز.</p>
-                    <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: inherit;">
+                    <div class="hero-buttons">
                         <a href="#cta" class="btn btn-primary">جربة مجاناً</a>
                         <a href="#showcase" class="btn btn-glass">اكتشف المزيد</a>
                     </div>
@@ -502,7 +565,7 @@
                     <div class="dash-card">
                         <img src="https://picsum.photos/seed/uiux/600/400" alt="Dashboard UI">
                         <!-- Floating Badge (Social Proof) -->
-                        <div style="position: absolute; bottom: 30px; left: -20px; background: white; padding: 12px 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 10px; animation: floatPop 4s infinite ease-in-out;">
+                        <div class="float-badge">
                             <div style="background: #DCFCE7; color: #166534; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">✓</div>
                             <div>
                                 <div style="font-size: 0.8rem; color: #64748B;">التحليل</div>
@@ -591,9 +654,9 @@
     <!-- Footer -->
     <footer style="background: white; padding: 60px 0; border-top: 1px solid #E2E8F0;">
         <div class="container">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px;">
-                <div>
-                    <div class="logo" style="margin-bottom: 15px;">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="logo" style="margin-bottom: 15px; justify-content: flex-start;">
                         <div class="logo-icon" style="background: var(--secondary);">S</div>
                         <span>Startup</span>
                     </div>
@@ -645,15 +708,6 @@
 
             const revealElements = document.querySelectorAll('.reveal');
             revealElements.forEach(el => observer.observe(el));
-        });
-
-        // إضافة تأثير بسيط للأزرار (Micro-interaction Feedback)
-        const buttons = document.querySelectorAll('.btn');
-        buttons.forEach(btn => {
-            btn.addEventListener('mouseenter', () => {
-                // تغيير بسيط في المؤشر أو الظل لتعزيز التغذية الراجعة
-                btn.style.cursor = 'pointer';
-            });
         });
     </script>
 </body>
